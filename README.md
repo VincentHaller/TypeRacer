@@ -8,3 +8,6 @@ Goals:
 - 22/12/23
 	- start project
 	- attempt at scrapper going really badly. 
+	- selenium was a dud, using requests instead.
+	- managed to scrap the first page worth of data. 
+	

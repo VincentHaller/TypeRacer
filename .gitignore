@@ -1,6 +1,6 @@
-# vscode settings
+# IDE settings
 .vscode
-
+.idea
 
 # Data files
 /data*
