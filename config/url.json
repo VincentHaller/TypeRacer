@@ -1,5 +1,6 @@
 {
-	"url_start":"https://data.typeracer.com/pit/race_history?user=",
+	"url_0":"https://data.typeracer.com/pit/race_history",
+	"url_1":"?user=",
 	"url_end":"&n=100&startDate=",
 	"user":"turbovince"
 }
