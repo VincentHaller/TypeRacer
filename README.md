@@ -5,11 +5,14 @@ Goals:
 2. Analyse improvements in performance in typeracer races. 
 	- Both in speed and accuracy. 
 
+To Do:
+	- Add date extraction. 
+
 - 24/12/23
 	- able to search next page.
 	- stop search if data already exists.
 	- function build.
-	- scrapper completed!
+	- early scrapper completed!
 
 - 22/12/23
 	- start project
