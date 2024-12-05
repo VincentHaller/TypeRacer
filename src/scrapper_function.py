@@ -1,5 +1,6 @@
 #%% imports
 import numpy as np
+import pandas as pd
 import json
 import requests
 import os
@@ -40,6 +41,7 @@ def load_typeracer_results(
 
 	l_num = []
 	l_per = []
+	l_date = []
 
 	while True:
 		req = requests.get(url)
@@ -47,6 +49,7 @@ def load_typeracer_results(
 
 		html_race_num = soup.find_all('div', 'profileTableHeaderUniverse')
 		html_race_per = soup.find_all('div', 'profileTableHeaderRaces')
+		html_race_date = soup.find_all('div', 'profileTableHeaderDate')
 
 		for num in html_race_num:
 			l_num.append(float(
@@ -62,6 +65,19 @@ def load_typeracer_results(
 				.replace('%', '')
 				.replace('WPM', '')
 			))
+		for date in html_race_date:
+			d = (
+				date.text
+				.replace('\n', '')
+				.replace(',', '')
+				.strip()
+			)
+			int_date = (
+				pd.to_datetime(d).date() 
+				- pd.to_datetime('1970-01-01').date()
+			).days
+		
+			l_date.append(int_date)
 
 		min_found = min(l_num)
 
@@ -82,9 +98,10 @@ def load_typeracer_results(
 
 	np_num = np.array(l_num).reshape([len_num, 1])
 	np_per = np.array(l_per).reshape([len_num, 2])
+	np_date = np.array(l_date).reshape([len_num, 1])
 
 	np_new = (
-		np.concatenate([np_num, np_per], axis=1)
+		np.concatenate([np_num, np_per, np_date], axis=1)
 		[np.where(np_num[:,0] > min_search)]
 		)
 

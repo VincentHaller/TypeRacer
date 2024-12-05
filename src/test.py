@@ -1,5 +1,6 @@
 #%%
 import numpy as np
+import pandas as pd
 import json
 import requests
 import os
@@ -35,24 +36,22 @@ url = (
 
 min_found = np.inf
 
-l_num = []
-l_per = []
 #%%
-
-
-
 req = requests.get(url)
 soup = BeautifulSoup(req.content, 'html.parser')
 
 html_race_num = soup.find_all('div', 'profileTableHeaderUniverse')
 html_race_per = soup.find_all('div', 'profileTableHeaderRaces')
 
+l_num = []
 for num in html_race_num:
 	l_num.append(float(
 		num.text
 		.replace('\n', '')
 		.replace(' ', '')
 	))
+
+l_per = []
 for per in html_race_per:
 	l_per.append(float(
 		per.text
@@ -66,13 +65,32 @@ for per in html_race_per:
 # %%
 html_race_date = soup.find_all('div', 'profileTableHeaderDate')
 # %%
+l_date = []
 for date in html_race_date:
-	print(
+	d = (
 		date.text
 		.replace('\n', '')
-		.replace(' ', '')
-		)
+		.replace(',', '')
+		.strip()
+	)
+	str_date = pd.to_datetime(d).date().strftime('%Y-%m-%d')
+	l_date.append(str_date)
+
 # %%
-date.text.replace('\n', '').replace(' ', '')
+l_date
+# %%
+html_race_date
+
+# %%
+len(l_date)
+# %%
+np.array(l_date)
+
+# %%
+len(str_date)
+# %%
+float((pd.to_datetime(d) - pd.to_datetime('1970-01-01')).days)
+# %%
+pd.to_datetime('1970-01-01') + pd.Timedelta(19823.0, 'D')
 
 # %%
